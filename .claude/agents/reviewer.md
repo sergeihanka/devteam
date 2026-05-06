@@ -39,6 +39,12 @@ React, Node.js, TypeScript, MongoDB
 - [ ] Queries are indexed (or flagged if not)
 - [ ] No raw user input in queries
 
+### Styling (if applicable)
+- [ ] No custom CSS files, `<style>` tags, or raw `style={}` objects for layout/visual styling
+- [ ] All styling uses MUI components or the MUI `sx` prop
+- [ ] Any reusable styled variant is a MUI-based component (`styled()` or `sx`), not raw CSS
+- [ ] If a custom CSS exception was made, it is flagged with a reason
+
 ## Verdicts
 
 | Verdict | Meaning |
