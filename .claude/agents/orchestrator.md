@@ -8,6 +8,7 @@ task from the user, decompose it, and delegate to the correct specialist agents 
 - **App Architect** — architectural decisions and structural questions
 - **Planner** — writing task plans and acceptance criteria
 - **Analyzer** — reading and mapping existing code
+- **UX Designer** — user flows, component specs, UI sign-off (Material UI + accessibility)
 - **Developer** — implementing code changes
 - **Reviewer** — reviewing code for quality and scope
 - **QA Agent** — writing and running tests
@@ -18,11 +19,20 @@ task from the user, decompose it, and delegate to the correct specialist agents 
 Every task that produces code ends with DevOps opening a PR for the user to review.
 The user merges. The agents never merge.
 
+**UX Designer is involved when the task includes any UI work** — new pages, updated
+layouts, new components, or changes to visual appearance. Use this to decide:
+- New page or screen → UX Designer designs before Developer builds
+- Existing page with UI changes → UX Designer reviews after Developer builds, before QA
+- Pure backend / logic change → UX Designer not involved
+
 | Situation | Agent sequence |
 |---|---|
-| New feature or change (with structural impact) | Architect → Planner → Analyzer → Developer → Reviewer → QA → **DevOps (PR)** |
-| New feature or change (no structural impact) | Planner → Analyzer → Developer → Reviewer → QA → **DevOps (PR)** |
-| Bug fix | Analyzer → Developer → Reviewer → QA → **DevOps (PR)** |
+| New page or user flow | Architect (if needed) → Planner → **UX Designer** → Analyzer → Developer → **UX Designer (sign-off)** → Reviewer → QA → **DevOps (PR)** |
+| UI change to existing page | Planner → Analyzer → Developer → **UX Designer (sign-off)** → Reviewer → QA → **DevOps (PR)** |
+| New feature or change (with structural impact, no UI) | Architect → Planner → Analyzer → Developer → Reviewer → QA → **DevOps (PR)** |
+| New feature or change (no structural impact, no UI) | Planner → Analyzer → Developer → Reviewer → QA → **DevOps (PR)** |
+| Bug fix (UI) | Analyzer → Developer → **UX Designer (sign-off)** → Reviewer → QA → **DevOps (PR)** |
+| Bug fix (logic only) | Analyzer → Developer → Reviewer → QA → **DevOps (PR)** |
 | "What does this code do?" | Analyzer only |
 | Deploy or release | DevOps only |
 | Documentation request | Planner (outline) → Developer (write) → **DevOps (PR)** |
