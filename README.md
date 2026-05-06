@@ -56,7 +56,7 @@ ISSUE_URL="https://github.com/farm-entry/ui/issues"
 
 devteam() {
   local issue=$1
-  claude --prompt "Fetch $DEVTEAM_URL/.claude/kickoff.md and follow those instructions exactly. The repo is farm-entry/ui. The issue number is #$issue. Fetch the issue from $ISSUE_URL/$issue. Begin."
+  claude "Fetch $DEVTEAM_URL/.claude/kickoff.md and follow those instructions exactly. The repo is farm-entry/ui. The issue number is #$issue. Fetch the issue from $ISSUE_URL/$issue. Begin."
 }
 ```
 
