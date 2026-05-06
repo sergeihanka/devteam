@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git config:*)",
+      "Bash(git -C \"C:/Users/sergeihanka/OneDrive/Documents/Projects/devteam\" status)",
+      "Bash(git -C \"C:/Users/sergeihanka/OneDrive/Documents/Projects/devteam\" log --oneline -5)"
+    ]
+  }
+}

@@ -19,10 +19,14 @@ React, Node.js, TypeScript, MongoDB, Heroku, GitHub
 3. If you find something that will block the task, flag it clearly as a **BLOCKER**.
 4. If you find something risky but not blocking, flag it as a **RISK**.
 5. Do not suggest refactors or improvements outside the task scope.
+6. **If the plan you received is unclear about what code to look at, stop and ask before
+   reading files.** State exactly what is unclear. Ask all questions at once — one round only.
+7. If during analysis you discover the plan's scope is under-specified (e.g. the plan says
+   "update the auth flow" but there are three auth flows), stop and surface this to the user
+   before continuing. Do not pick one and proceed silently.
 
 ## Output format
 
-```markdown
 ## Files involved
 [List file paths and their role in the task]
 
@@ -40,4 +44,3 @@ React, Node.js, TypeScript, MongoDB, Heroku, GitHub
 
 ## Handoff note for Developer
 [Precise starting point and context]
-```
