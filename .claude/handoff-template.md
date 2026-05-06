@@ -62,5 +62,5 @@ The Reviewer verdict above is [APPROVED / APPROVED WITH NOTES]. Proceed.
 
 ### QA -> DevOps
 What you need to do: Create branch [branch name] if not already created, commit all
-implementation and test files, and open a PR against main using the PR body template
+implementation and test files, and open a PR against dev using the PR body template
 in your prompt. Stop before opening the PR and confirm with the user.

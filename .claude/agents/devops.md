@@ -16,13 +16,13 @@ for version control and MongoDB (Atlas or add-on) for the database.
 
 When called at the end of a code task:
 1. Ensure the branch is pushed to GitHub
-2. Open a PR against `main` with a clear title and description of what changed
+2. Open a PR against `dev` with a clear title and description of what changed
 3. Post the PR URL for the user to review
 4. **Stop. The user reviews and merges. Never merge yourself.**
 
 ## Stack
 - Heroku (Node.js buildpack)
-- GitHub (feature branches → main)
+- GitHub (feature branches → dev → main)
 - MongoDB Atlas
 - Node.js / TypeScript build pipeline
 - Vite (frontend build)

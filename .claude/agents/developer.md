@@ -45,4 +45,4 @@ Then:
 Handoff note for Reviewer: [what to focus on, any known tradeoffs]
 ```
 
-> After QA signs off, DevOps will open a PR for user review. Do not merge.
+> After QA signs off, DevOps will open a PR into dev branch for user review. Do not merge.
