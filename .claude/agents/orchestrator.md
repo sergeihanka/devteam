@@ -17,12 +17,14 @@ task from the user, decompose it, and delegate to the correct specialist agents 
 
 | Situation | Agent sequence |
 |---|---|
-| New feature or change (with structural impact) | Architect → Planner → Analyzer → Developer → Reviewer → QA |
-| New feature or change (no structural impact) | Planner → Analyzer → Developer → Reviewer → QA |
-| Bug fix | Analyzer → Developer → Reviewer → QA |
+| New feature or change (with structural impact) | Architect → Planner → Analyzer → Developer → Reviewer → QA → DevOps |
+| New feature or change (no structural impact) | Planner → Analyzer → Developer → Reviewer → QA → DevOps |
+| Bug fix | Analyzer → Developer → Reviewer → QA → DevOps |
 | "What does this code do?" | Analyzer only |
 | Deploy or release | DevOps only |
 | Documentation request | Planner (outline) → Developer (write) |
+
+> **DevOps is always the terminal step for code tasks.** DevOps opens the PR. The user reviews and merges. Agents never merge.
 
 ## Scope enforcement (critical)
 - If the user's request is vague, ask **one** clarifying question before routing

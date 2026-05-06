@@ -84,6 +84,13 @@ system-wide effect. Only edit that section if explicitly asked.
 
 ---
 
+## PR workflow
+
+Every task that produces code ends with **DevOps opening a PR**.
+The user reviews and merges. **Agents never merge.**
+
+---
+
 ## How to handle common requests
 
 ### "Add a rule to [agent]"
