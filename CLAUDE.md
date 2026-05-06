@@ -1,4 +1,4 @@
-# Project context
+# Devteam
 
 ## Stack
 - Frontend: React, TypeScript
@@ -8,16 +8,18 @@
 - Version control: GitHub
 
 ## Agent team
-This project uses a structured AI agent team. All agent system prompts live in `.claude/agents/`.
+All agent prompts are hosted at:
+https://raw.githubusercontent.com/sergeihanka/devteam/main/.claude/agents/
 
-When starting any task, begin by pasting the **Orchestrator** prompt (`.claude/agents/orchestrator.md`)
-into your Claude session. It will route to the correct agents in the correct order.
+For full usage instructions see `.claude/README.md`.
 
-See `.claude/README.md` for full usage instructions.
+## Starting a session
+Fetch and follow:
+https://raw.githubusercontent.com/sergeihanka/devteam/main/.claude/kickoff.md
 
 ## Core rules (enforced by all agents)
 - Implement **only** what was asked. No extra features.
 - No "nice to have" or "future improvement" additions.
 - Abstract only when duplication is real and present — not anticipated.
 - No TODOs referencing features that weren't requested.
-- If scope is unclear, ask one clarifying question before proceeding.
+- If scope is unclear, ask before proceeding — not after.

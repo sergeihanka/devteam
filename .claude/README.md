@@ -1,56 +1,60 @@
-# AI agent team
+# Agent team — operational reference
 
-This directory contains the system prompts and handoff templates for a structured AI agent team
-built for a solo React / Node.js / TypeScript developer.
+This file is read by Claude Code during a session. It defines the file map,
+workflow order, and rules for editing agent prompts.
 
-## Agents
-
-| Agent | File | Purpose |
-|---|---|---|
-| Orchestrator | `agents/orchestrator.md` | Entry point — routes tasks to the right agents |
-| App Architect | `agents/architect.md` | Structural decisions, patterns, conventions |
-| Planner | `agents/planner.md` | Task plans, scope, acceptance criteria |
-| Analyzer | `agents/analyzer.md` | Reads existing code, maps dependencies |
-| Developer | `agents/developer.md` | Implements exactly what was asked |
-| Reviewer | `agents/reviewer.md` | Code quality and scope compliance |
-| QA Agent | `agents/qa.md` | Tests and coverage |
-| DevOps Agent | `agents/devops.md` | Deploys, env vars, GitHub, Heroku |
-
-## How to use
-
-### In Claude.ai Projects
-1. Create a new Project
-2. Paste `agents/orchestrator.md` as the project system prompt
-3. Add all other agent `.md` files as Project knowledge files
-4. Start every task by telling the Orchestrator what you need
-
-### In Claude Code (CLI)
-Claude Code reads `CLAUDE.md` automatically on session start.
-You can then reference agents directly:
+## File map
 
 ```
-Read .claude/agents/planner.md and act as the Planner for this task: [your task]
+README.md                        <- Human-facing repo overview
+CLAUDE.md                        <- Project context, auto-read by Claude Code
+AGENTS.md                        <- Rules for editing agent prompts
+.claude/
+  README.md                      <- This file — operational reference for Claude Code
+  kickoff.md                     <- Fetched automatically by the devteam alias
+  handoff-template.md            <- Inter-agent context passing
+  agents/
+    orchestrator.md              <- Entry point, routing logic
+    architect.md                 <- Structural decisions
+    planner.md                   <- Task planning, acceptance criteria
+    analyzer.md                  <- Code reading and mapping
+    ux-designer.md               <- User flows, MUI specs, Canva mockups, UI sign-off
+    developer.md                 <- Implementation rules and coding standards
+    reviewer.md                  <- Code review checklist and verdicts
+    qa.md                        <- Test writing rules
+    devops.md                    <- Heroku, GitHub, env vars, PR creation
 ```
-
-Or for a full workflow:
-```
-Read .claude/agents/orchestrator.md. My task is: [your task]
-```
-
-### Handoff template
-Use `.claude/handoff-template.md` when passing work between agents in a conversation.
 
 ## Workflow order
 
 ```
 Orchestrator
-    └─► Architect (if structural impact)
-    └─► Planner
-    └─► Analyzer
-    └─► Developer
-    └─► Reviewer
-    └─► QA Agent
-    └─► DevOps Agent (on deploy)
+    |-> Architect           if structural decisions needed
+    |-> Planner             STOP after output — wait for user approval
+    |-> UX Designer         if UI work — design before development
+    |-> Analyzer            STOP if BLOCKER — wait for resolution
+    |-> Developer           works on feature branch, never main
+    |-> UX Designer         if UI work — sign-off after development
+    |-> Reviewer            STOP if CHANGES REQUIRED — wait for instruction
+    |-> QA Agent
+    |-> DevOps              opens PR — STOP and confirm before creating
 ```
 
-Bug fix shortcut: `Analyzer → Developer → Reviewer → QA`
+Bug fix:              Analyzer -> Developer -> Reviewer -> QA -> DevOps
+Logic only (no UI):   skip UX Designer entirely
+Read-only query:      Analyzer only
+Deploy only:          DevOps only
+
+## Checkpoint rules
+
+These apply in every session — do not skip them:
+- After Planner outputs the plan: STOP and wait for "proceed"
+- After Analyzer flags a BLOCKER: STOP and wait for resolution
+- After Reviewer returns CHANGES REQUIRED: STOP and wait for instruction
+- Before opening a PR: STOP and confirm with the user
+
+## Rules for editing agent prompts
+
+Read AGENTS.md before making any changes to files in agents/.
+One agent per commit. Commit format: agent(<name>): <what changed>
+Do not reformat, reorder, or clean up sections that were not asked about.
