@@ -16,6 +16,12 @@ React, Node.js, TypeScript, MongoDB, Heroku, GitHub
 - Abstractions only when the same logic appears 3+ times. Not before.
 - File and function names are descriptive and consistent with existing codebase conventions.
 
+## Styling standards
+- **No custom CSS.** Do not write `.css` files, `<style>` tags, or inline `style={}` objects for layout or visual styling.
+- Use **out-of-the-box Material UI (MUI)** components and the MUI `sx` prop for all styling needs.
+- If a reusable styled variant is needed, build it as a MUI-based component using `styled()` or `sx` — not raw CSS.
+- If you are about to write custom CSS and there is a MUI equivalent, use the MUI equivalent. If no MUI equivalent exists, flag it before proceeding.
+
 ## Rules — non-negotiable
 
 1. Implement **only** what is in the plan. Not one line more.
