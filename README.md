@@ -1,7 +1,9 @@
 # devteam
 
-A structured AI agent team for solo React / Node.js / TypeScript development.
-Agents plan, analyze, build, review, test, and deploy — strictly implementing only what was asked.
+An AI agent team for solo React / Node.js / TypeScript development.
+Agents plan, analyze, build, review, test, and deploy — implementing only what was asked.
+
+---
 
 ## Agents
 
@@ -17,32 +19,75 @@ Agents plan, analyze, build, review, test, and deploy — strictly implementing 
 | **QA Agent** | Writes tests against acceptance criteria. |
 | **DevOps Agent** | Handles Heroku deployments, env vars, and GitHub ops. |
 
-## Core principle
+> **Core principle:** Implement only what was asked. No nice-to-haves. No future features. No scope creep.
 
-> Implement only what was asked. No nice-to-haves. No future features. No scope creep.
+---
 
 ## Setup
 
+Do this once per machine.
+
 ### 1. Install Claude Code
+
+**Mac**
+```bash
+brew install claude-code
+```
+
+**PC (Cmder / Git Bash)**
 ```bash
 npm install -g @anthropic/claude-code
 ```
 
-### 2. Add the devteam alias to ~/.bashrc
+Verify:
 ```bash
+claude --version
+```
+
+---
+
+### 2. Add the devteam alias
+
+Two variables at the top make this easy to update if anything changes.
+
+```bash
+DEVTEAM_URL="https://raw.githubusercontent.com/sergeihanka/devteam/main"
+ISSUE_URL="https://github.com/farm-entry/ui/issues"
+
 devteam() {
   local issue=$1
-  local repo=$(basename $(pwd))
-  claude --prompt "Fetch https://raw.githubusercontent.com/sergeihanka/devteam/main/.claude/kickoff.md and follow those instructions exactly. The repo is sergeihanka/$repo. The issue number is #$issue. Fetch the issue body from GitHub. Begin."
+  claude --prompt "Fetch $DEVTEAM_URL/.claude/kickoff.md and follow those instructions exactly. The repo is farm-entry/ui. The issue number is #$issue. Fetch the issue from $ISSUE_URL/$issue. Begin."
 }
 ```
 
-Reload:
+**Mac — add to `~/.zshrc`**
 ```bash
-source ~/.bashrc
+open ~/.zshrc
+# paste the block above at the bottom, save, then:
+source ~/.zshrc
 ```
 
-### 3. Add agent team reference to each app repo's CLAUDE.md
+If `~/.zshrc` doesn't exist yet:
+```bash
+touch ~/.zshrc && open ~/.zshrc
+```
+
+**PC — add to Cmder startup script**
+```bash
+# Run this inside Cmder to open the config file:
+notepad "%USERPROFILE%\AppData\Roaming\cmder\config\user_profile.cmd"
+# paste the block above at the bottom, save, restart Cmder
+```
+
+> Make sure your Cmder tab is running Git Bash, not cmd.exe.
+> Switch via the green + icon bottom right → select "Git Bash".
+
+---
+
+### 3. Add agent team config to each app repo
+
+Create or update `CLAUDE.md` in the root of `farm-entry/ui`:
+
 ```markdown
 ## Agent team
 Kickoff: https://raw.githubusercontent.com/sergeihanka/devteam/main/.claude/kickoff.md
@@ -55,54 +100,68 @@ Agents: https://raw.githubusercontent.com/sergeihanka/devteam/main/.claude/agent
 - Before opening a PR: STOP and confirm with the user
 
 ## Repo
-sergeihanka/your-repo-name
+farm-entry/ui
+
+## Issues
+https://github.com/farm-entry/ui/issues/
 ```
 
-## Usage
+---
 
-Navigate to any app repo and run:
+## Running against an issue
+
 ```bash
-cd path/to/your-app
-devteam 42
+cd path/to/farm-entry/ui
+devteam 49
 ```
 
-Claude Code fetches the kickoff instructions, pulls the issue from GitHub, and runs
-the full agent chain. You step in at checkpoints only.
+That's it. Claude Code fetches the kickoff instructions, pulls the issue from GitHub,
+and runs the full agent chain. You step in at checkpoints only.
 
-## Session flow
+---
+
+## What happens in a session
 
 ```
-devteam 42
+devteam 49
     └─► Orchestrator    determines agent chain
-    └─► Planner         writes plan → STOP: you approve
+    └─► Planner         writes plan — STOP: you approve before continuing
     └─► UX Designer     designs screens (UI tasks only)
     └─► Analyzer        maps affected code
     └─► Developer       implements on feature branch
     └─► UX Designer     signs off on UI (UI tasks only)
     └─► Reviewer        checks scope and quality
     └─► QA Agent        writes tests
-    └─► DevOps          opens PR → you review and merge
+    └─► DevOps          opens PR — you review and merge
 ```
 
-## Checkpoints
+### Your four decision points
 
-| Checkpoint | What to do |
+| When | What to do |
 |---|---|
-| After Planner | Read the plan and out-of-scope section. Type "proceed" or correct it. |
-| After Analyzer BLOCKER | Resolve before continuing. |
-| After Reviewer CHANGES REQUIRED | Give specific instruction — Developer reruns. |
-| Before PR opens | Confirm, then review on GitHub and merge. |
+| Planner outputs the plan | Read it carefully, especially the out-of-scope section. Type "proceed" or correct it before anything is built. |
+| Analyzer flags a BLOCKER | Resolve it before typing "proceed". |
+| Reviewer returns CHANGES REQUIRED | Give specific instruction — Developer reruns automatically. |
+| DevOps is ready to open PR | Confirm, then review on GitHub and merge when satisfied. |
+
+---
 
 ## Updating agents
+
+Agent prompts live in `.claude/agents/`. To edit them:
 
 ```bash
 cd path/to/devteam
 claude
 ```
 
-Read `AGENTS.md` before making any changes. Commit format: `agent(<name>): <what changed>`
+- Read `AGENTS.md` before making any changes
+- One agent per commit
+- Commit format: `agent(<name>): <what changed>`
 
-Changes pushed here are picked up by all app repos on the next session — no sync needed.
+Changes pushed here are picked up by all app repos automatically on the next session.
+
+---
 
 ## Stack
 
